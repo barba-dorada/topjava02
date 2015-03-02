@@ -9,17 +9,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * User: gkislin
- * Date: 19.08.2014
+ * Created by vad on 01.03.2015.
  */
-public class UserServlet extends HttpServlet {
+public class UserMealServlet extends HttpServlet {
+    
+    private static final LoggerWrapper LOG = LoggerWrapper.get(UserMealServlet.class);
+    
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    private static final LoggerWrapper LOG = LoggerWrapper.get(UserServlet.class);
+    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOG.debug("redirect to userList");
+        LOG.debug("forward to userMeal");
 
-        request.getRequestDispatcher("/userList.jsp").forward(request, response);
+        request.getRequestDispatcher("/userMeal.jsp").forward(request, response);
         //response.sendRedirect("userList.jsp");
     }
 }
