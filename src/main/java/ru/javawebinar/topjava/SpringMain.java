@@ -6,10 +6,6 @@ import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.web.meal.UserMealRestController;
 import ru.javawebinar.topjava.web.user.AdminUserRestController;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.StringJoiner;
-
 /**
  * User: gkislin
  * Date: 22.08.2014
@@ -24,10 +20,8 @@ public class SpringMain {
 //            adminController.delete(7);
 //            adminController.getByMail("dummy");
 
-            UserMealRestController userMealRestController=appCtx.getBean(UserMealRestController.class);
+            UserMealRestController userMealRestController = appCtx.getBean(UserMealRestController.class);
 
-            userMealRestController.setUserId(333);
-            
             UserMeal userMeal = userMealRestController.getNew();
             userMeal.setDescription("meal 1");
             userMeal.setCalories(100);
@@ -38,7 +32,7 @@ public class SpringMain {
             userMeal.setDescription("meal 2");
             userMealRestController.update(userMeal);
 
-            
+
         }
     }
 }

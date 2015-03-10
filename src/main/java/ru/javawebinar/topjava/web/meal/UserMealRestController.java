@@ -2,6 +2,7 @@ package ru.javawebinar.topjava.web.meal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import ru.javawebinar.topjava.LoggedUser;
 import ru.javawebinar.topjava.LoggerWrapper;
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.service.UserMealService;
@@ -16,29 +17,23 @@ import java.util.List;
 @Controller
 public class UserMealRestController {
     private static final LoggerWrapper LOG = LoggerWrapper.get(UserMealRestController.class);
-    private int userId;
 
     @Autowired
     private UserMealService service;
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
 
     public UserMeal getNew(){
         UserMeal userMeal=new UserMeal();
         userMeal.setDateTime(LocalDateTime.now());
         userMeal.setCalories(0);
         userMeal.setDescription("meal");
-        userMeal.setUserId(userId);
+        userMeal.setUserId(LoggedUser.id());
         userMeal.setId(0);
         return userMeal;
     }
     
     public List<UserMeal> getAll() {
         LOG.info("getAll");
-        return service.getByUserId(userId);
+        return service.getByUserId(LoggedUser.id());
     }
 
     public UserMeal get(int id) {
