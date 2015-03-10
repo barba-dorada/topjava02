@@ -26,10 +26,11 @@ public class SpringMain {
 
             UserMealRestController userMealRestController=appCtx.getBean(UserMealRestController.class);
 
+            userMealRestController.setUserId(333);
+            
             UserMeal userMeal = userMealRestController.getNew();
             userMeal.setDescription("meal 1");
             userMeal.setCalories(100);
-            userMealRestController.setUserId(LoggedUser.id());
             userMealRestController.delete(8);
             userMealRestController.getAll();
             //userMealRestController.get(1);
