@@ -6,12 +6,9 @@ import ru.javawebinar.topjava.LoggedUser;
 import ru.javawebinar.topjava.LoggerWrapper;
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.service.UserMealService;
-import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import static ru.javawebinar.topjava.util.exception.ExceptionUtil.checkAccess;
 
 /**
  * GKislin
@@ -25,43 +22,44 @@ public class UserMealRestController {
     private UserMealService service;
 
     public UserMeal getNew(){
-        UserMeal userMeal=new UserMeal();
-        userMeal.setDateTime(LocalDateTime.now());
-        userMeal.setCalories(0);
-        userMeal.setDescription("meal");
-        userMeal.setUserId(LoggedUser.id());
-        userMeal.setId(0);
-        return userMeal;
+        LOG.info("getNew");
+        return service.getNew(LoggedUser.id());
     }
     
     public List<UserMeal> getAll() {
         LOG.info("getAll");
-        return service.getByUserId(LoggedUser.id());
+        return service.getAll(LoggedUser.id());
+    }
+
+    public List<UserMeal> getAllFromTo(LocalDateTime from,LocalDateTime to) {
+        LOG.info("getAllFromTo");
+        return service.getAll(from,to,LoggedUser.id());
     }
 
     public UserMeal get(int id) {
         LOG.info("get " + id);
-        UserMeal userMeal=service.get(id);
-        checkAccess(userMeal);
+        UserMeal userMeal=service.get(id,LoggedUser.id());
         return userMeal;
     }
 
     public UserMeal create(UserMeal userMeal) {
         LOG.info("create " + userMeal);
-        checkAccess(userMeal);
-        return service.save(userMeal);
+        return service.save(userMeal,LoggedUser.id());
     }
 
     public void delete(int id) {
-        checkAccess(service.get(id));
         LOG.info("delete " + id);
-        service.delete(id);
+        service.delete(id,LoggedUser.id());
+    }
+
+    public void deleteAll(){
+        LOG.info("deleteAll");
+        service.deleteAll(LoggedUser.id());
     }
 
     public void update(UserMeal userMeal) {
-        checkAccess(userMeal);
         LOG.info("update " + userMeal);
-        service.update(userMeal);
+        service.update(userMeal,LoggedUser.id());
     }
 
 }

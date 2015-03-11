@@ -31,6 +31,9 @@ public class SpringMain {
             userMealRestController.create(userMeal);
             userMeal.setDescription("meal 2");
             userMealRestController.update(userMeal);
+            userMeal.setUserId(5);
+            userMealRestController.update(userMeal);
+
 
 
         }
@@ -39,8 +42,8 @@ public class SpringMain {
 
 /* output......
 
-"C:\Program Files\Java\jdk1.8.0_31\bin\java" -Dvisualvm.id=80495905108851 -Didea.launcher.port=7539 "-Didea.launcher.bin.path=C:\dev\JetBrains\IntelliJ IDEA 14.0.2\bin" -Dfile.encoding=UTF-8 -classpath "C:\Program Files\Java\jdk1.8.0_31\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\deploy.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\javaws.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\jfxswt.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\management-agent.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\plugin.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\access-bridge-64.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\cldrdata.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\dnsns.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\jaccess.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\jfxrt.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\localedata.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\nashorn.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\sunec.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\sunjce_provider.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\sunmscapi.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\sunpkcs11.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\zipfs.jar;C:\dev\projects\topjava\target\classes;C:\Users\adm\.m2\repository\org\slf4j\slf4j-api\1.7.7\slf4j-api-1.7.7.jar;C:\Users\adm\.m2\repository\org\slf4j\jcl-over-slf4j\1.7.7\jcl-over-slf4j-1.7.7.jar;C:\Users\adm\.m2\repository\org\slf4j\jul-to-slf4j\1.7.7\jul-to-slf4j-1.7.7.jar;C:\Users\adm\.m2\repository\ch\qos\logback\logback-classic\1.1.2\logback-classic-1.1.2.jar;C:\Users\adm\.m2\repository\ch\qos\logback\logback-core\1.1.2\logback-core-1.1.2.jar;C:\Users\adm\.m2\repository\org\springframework\spring-context\4.1.5.RELEASE\spring-context-4.1.5.RELEASE.jar;C:\Users\adm\.m2\repository\org\springframework\spring-aop\4.1.5.RELEASE\spring-aop-4.1.5.RELEASE.jar;C:\Users\adm\.m2\repository\aopalliance\aopalliance\1.0\aopalliance-1.0.jar;C:\Users\adm\.m2\repository\org\springframework\spring-beans\4.1.5.RELEASE\spring-beans-4.1.5.RELEASE.jar;C:\Users\adm\.m2\repository\org\springframework\spring-core\4.1.5.RELEASE\spring-core-4.1.5.RELEASE.jar;C:\Users\adm\.m2\repository\org\springframework\spring-expression\4.1.5.RELEASE\spring-expression-4.1.5.RELEASE.jar;C:\dev\JetBrains\IntelliJ IDEA 14.0.2\lib\idea_rt.jar" com.intellij.rt.execution.application.AppMain ru.javawebinar.topjava.SpringMain
-INFO  ClassPathXmlApplicationContext [AbstractApplicationContext.java:510] Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@61dc03ce: startup date [Tue Mar 10 13:19:59 GMT+03:00 2015]; root of context hierarchy
+"C:\Program Files\Java\jdk1.8.0_31\bin\java" -Dvisualvm.id=189662334600982 -Didea.launcher.port=7536 "-Didea.launcher.bin.path=C:\dev\JetBrains\IntelliJ IDEA 14.0.2\bin" -Dfile.encoding=UTF-8 -classpath "C:\Program Files\Java\jdk1.8.0_31\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\deploy.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\javaws.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\jfxswt.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\management-agent.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\plugin.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\access-bridge-64.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\cldrdata.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\dnsns.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\jaccess.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\jfxrt.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\localedata.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\nashorn.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\sunec.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\sunjce_provider.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\sunmscapi.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\sunpkcs11.jar;C:\Program Files\Java\jdk1.8.0_31\jre\lib\ext\zipfs.jar;C:\dev\projects\topjava\target\classes;C:\Users\adm\.m2\repository\org\slf4j\slf4j-api\1.7.7\slf4j-api-1.7.7.jar;C:\Users\adm\.m2\repository\org\slf4j\jcl-over-slf4j\1.7.7\jcl-over-slf4j-1.7.7.jar;C:\Users\adm\.m2\repository\org\slf4j\jul-to-slf4j\1.7.7\jul-to-slf4j-1.7.7.jar;C:\Users\adm\.m2\repository\ch\qos\logback\logback-classic\1.1.2\logback-classic-1.1.2.jar;C:\Users\adm\.m2\repository\ch\qos\logback\logback-core\1.1.2\logback-core-1.1.2.jar;C:\Users\adm\.m2\repository\org\springframework\spring-context\4.1.5.RELEASE\spring-context-4.1.5.RELEASE.jar;C:\Users\adm\.m2\repository\org\springframework\spring-aop\4.1.5.RELEASE\spring-aop-4.1.5.RELEASE.jar;C:\Users\adm\.m2\repository\aopalliance\aopalliance\1.0\aopalliance-1.0.jar;C:\Users\adm\.m2\repository\org\springframework\spring-beans\4.1.5.RELEASE\spring-beans-4.1.5.RELEASE.jar;C:\Users\adm\.m2\repository\org\springframework\spring-core\4.1.5.RELEASE\spring-core-4.1.5.RELEASE.jar;C:\Users\adm\.m2\repository\org\springframework\spring-expression\4.1.5.RELEASE\spring-expression-4.1.5.RELEASE.jar;C:\dev\JetBrains\IntelliJ IDEA 14.0.2\lib\idea_rt.jar" com.intellij.rt.execution.application.AppMain ru.javawebinar.topjava.SpringMain
+INFO  ClassPathXmlApplicationContext [AbstractApplicationContext.java:510] Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@61dc03ce: startup date [Wed Mar 11 19:39:34 GMT+03:00 2015]; root of context hierarchy
 INFO  XmlBeanDefinitionReader [XmlBeanDefinitionReader.java:317] Loading XML bean definitions from class path resource [spring/spring-app.xml]
 
 org.springframework.context.annotation.internalConfigurationAnnotationProcessor
@@ -57,19 +60,34 @@ userRestController
 org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor
 org.springframework.context.annotation.ConfigurationClassPostProcessor.enhancedConfigurationProcessor
 
-INFO  UserMealRestController [LoggerWrapper.java:28] delete 8
-INFO  UserMealServiceImpl [LoggerWrapper.java:28] delete 8
-INFO  MockUserMealRepositoryImpl [LoggerWrapper.java:28] delete 8
-INFO  UserMealRestController [LoggerWrapper.java:28] getAll
-INFO  UserMealServiceImpl [LoggerWrapper.java:28] getByUserId 333
-INFO  MockUserMealRepositoryImpl [LoggerWrapper.java:28] getById 333
-INFO  UserMealRestController [LoggerWrapper.java:28] create UserMeal{userId=333, dateTime=2015-03-10T13:19:59.945, description='meal 1', calories=100} BaseEntity{id=0}
-INFO  UserMealServiceImpl [LoggerWrapper.java:28] save UserMeal{userId=333, dateTime=2015-03-10T13:19:59.945, description='meal 1', calories=100} BaseEntity{id=0}
-INFO  MockUserMealRepositoryImpl [LoggerWrapper.java:28] save UserMeal{userId=333, dateTime=2015-03-10T13:19:59.945, description='meal 1', calories=100} BaseEntity{id=0}
-INFO  UserMealRestController [LoggerWrapper.java:28] update UserMeal{userId=333, dateTime=2015-03-10T13:19:59.945, description='meal 2', calories=100} BaseEntity{id=0}
-INFO  UserMealServiceImpl [LoggerWrapper.java:28] update UserMeal{userId=333, dateTime=2015-03-10T13:19:59.945, description='meal 2', calories=100} BaseEntity{id=0}
-INFO  MockUserMealRepositoryImpl [LoggerWrapper.java:28] save UserMeal{userId=333, dateTime=2015-03-10T13:19:59.945, description='meal 2', calories=100} BaseEntity{id=0}
-INFO  ClassPathXmlApplicationContext [AbstractApplicationContext.java:862] Closing org.springframework.context.support.ClassPathXmlApplicationContext@61dc03ce: startup date [Tue Mar 10 13:19:59 GMT+03:00 2015]; root of context hierarchy
+INFO  UserMealRestController [LoggerWrapper.java:29] getNew
+INFO  UserMealRestController [LoggerWrapper.java:29] delete 8
+INFO  UserMealServiceImpl [LoggerWrapper.java:29] delete 8
+INFO  MockUserMealRepositoryImpl [LoggerWrapper.java:29] delete 8
+INFO  UserMealRestController [LoggerWrapper.java:29] getAll
+INFO  UserMealServiceImpl [LoggerWrapper.java:29] getByUserId 0
+INFO  MockUserMealRepositoryImpl [LoggerWrapper.java:29] getAll 0
+INFO  UserMealRestController [LoggerWrapper.java:29] create UserMeal{userId=0, dateTime=2015-03-11T19:39:35.021, description='meal 1', calories=100} BaseEntity{id=0}
+INFO  UserMealServiceImpl [LoggerWrapper.java:29] save UserMeal{userId=0, dateTime=2015-03-11T19:39:35.021, description='meal 1', calories=100} BaseEntity{id=0}
+INFO  MockUserMealRepositoryImpl [LoggerWrapper.java:29] save UserMeal{userId=0, dateTime=2015-03-11T19:39:35.021, description='meal 1', calories=100} BaseEntity{id=0}
+INFO  UserMealRestController [LoggerWrapper.java:29] update UserMeal{userId=0, dateTime=2015-03-11T19:39:35.021, description='meal 2', calories=100} BaseEntity{id=0}
+INFO  UserMealServiceImpl [LoggerWrapper.java:29] update UserMeal{userId=0, dateTime=2015-03-11T19:39:35.021, description='meal 2', calories=100} BaseEntity{id=0}
+INFO  MockUserMealRepositoryImpl [LoggerWrapper.java:29] save UserMeal{userId=0, dateTime=2015-03-11T19:39:35.021, description='meal 2', calories=100} BaseEntity{id=0}
+INFO  UserMealRestController [LoggerWrapper.java:29] update UserMeal{userId=5, dateTime=2015-03-11T19:39:35.021, description='meal 2', calories=100} BaseEntity{id=0}
+INFO  UserMealServiceImpl [LoggerWrapper.java:29] update UserMeal{userId=5, dateTime=2015-03-11T19:39:35.021, description='meal 2', calories=100} BaseEntity{id=0}
+ERROR MockUserMealRepositoryImpl [LoggerWrapper.java:81] Access Violation! bad userId on save! userId:0meal:UserMeal{userId=5, dateTime=2015-03-11T19:39:35.021, description='meal 2', calories=100} BaseEntity{id=0}
+INFO  ClassPathXmlApplicationContext [AbstractApplicationContext.java:862] Closing org.springframework.context.support.ClassPathXmlApplicationContext@61dc03ce: startup date [Wed Mar 11 19:39:34 GMT+03:00 2015]; root of context hierarchy
+Exception in thread "main" ru.javawebinar.topjava.util.exception.AccessViolatioException: bad userId on save! userId:0meal:UserMeal{userId=5, dateTime=2015-03-11T19:39:35.021, description='meal 2', calories=100} BaseEntity{id=0}
+	at ru.javawebinar.topjava.LoggerWrapper.getAccesViovationException(LoggerWrapper.java:82)
+	at ru.javawebinar.topjava.repository.mock.MockUserMealRepositoryImpl.save(MockUserMealRepositoryImpl.java:25)
+	at ru.javawebinar.topjava.service.UserMealServiceImpl.update(UserMealServiceImpl.java:65)
+	at ru.javawebinar.topjava.web.meal.UserMealRestController.update(UserMealRestController.java:62)
+	at ru.javawebinar.topjava.SpringMain.main(SpringMain.java:35)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:134)
 
-Process finished with exit code 0
+Process finished with exit code 1
  */

@@ -1,8 +1,8 @@
 package ru.javawebinar.topjava.repository;
 
-import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.model.UserMeal;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -10,17 +10,17 @@ import java.util.List;
  * 06.03.2015.
  */
 public interface UserMealRepository {
-    UserMeal save(UserMeal userMeal);
+    UserMeal save(UserMeal userMeal, int userId);
 
     // false if not found
-    boolean delete(int id);
+    boolean delete(int id, int userId);
 
     // null if not found
-    UserMeal get(int id);
+    UserMeal get(int id, int userId);
 
-    // null if not found
-    List<UserMeal> getByUserId(int userId);
+    List<UserMeal> getAll(int userId);
 
-    List<UserMeal> getAll();
-    
+    List<UserMeal> getFromTo(LocalDateTime from, LocalDateTime to, int userId);
+
+
 }

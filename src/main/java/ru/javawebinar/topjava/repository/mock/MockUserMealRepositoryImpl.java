@@ -2,13 +2,11 @@ package ru.javawebinar.topjava.repository.mock;
 
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.LoggerWrapper;
-import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.repository.UserMealRepository;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -19,36 +17,39 @@ import java.util.List;
 public class MockUserMealRepositoryImpl implements UserMealRepository {
     private static final LoggerWrapper LOG = LoggerWrapper.get(MockUserMealRepositoryImpl.class);
 
-
-
-    
     @Override
-    public UserMeal save(UserMeal userMeal) {
+    public UserMeal save(UserMeal userMeal,int userId) {
+        if(userMeal.getUserId()!=userId) throw LOG.getAccesViovationException("bad userId on save! userId:"+userId+"meal:"+userMeal);
         LOG.info("save " + userMeal);
         return userMeal;
     }
 
+    // тут два пути. или на уровне запросов по id и userId к базе. или стандартный запрос + проверка полученного.
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id,int userId) {
         LOG.info("delete " + id);
         return true;
     }
 
+    // тут два пути. или на уровне запросов по id и userId к базе. или стандартный запрос + проверка полученного.
     @Override
-    public UserMeal get(int id) {
+    public UserMeal get(int id,int userId) {
         LOG.info("get " + id);
         return null;
     }
 
+    // тут доступ на уровне запроса, проверяет база.
     @Override
-    public List<UserMeal> getByUserId(int userId) {
-        LOG.info("getById " + userId);
+    public List<UserMeal> getAll(int userId) {
+        LOG.info("getAll " + userId);
         return Collections.emptyList();
     }
 
+    // тут доступ на уровне запроса, проверяет база.
     @Override
-    public List<UserMeal> getAll() {
-        LOG.info("getAll");
+    public List<UserMeal> getFromTo(LocalDateTime from, LocalDateTime to, int userId) {
+        LOG.info("getFromTo");
         return Collections.emptyList();
     }
+
 }

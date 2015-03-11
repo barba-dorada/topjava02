@@ -78,7 +78,7 @@ public class LoggerWrapper {
     }
 
     public AccessViolatioException getAccesViovationException(String msg) {
-        logger.error("Access Violation");
+        logger.error("Access Violation! "+msg);
         return new AccessViolatioException(msg);
     }
 }
