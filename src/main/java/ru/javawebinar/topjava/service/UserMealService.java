@@ -4,6 +4,7 @@ import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -19,7 +20,11 @@ public interface UserMealService {
 
     public List<UserMeal> getByUserId(int userId) throws NotFoundException;
 
+    public void  deleteByUserId(int userId);
+
     public List<UserMeal> getAll();
 
     public void update(UserMeal userMeal) throws NotFoundException;
+
+    public List<UserMeal> getAll(LocalDateTime from,LocalDateTime to);
 }

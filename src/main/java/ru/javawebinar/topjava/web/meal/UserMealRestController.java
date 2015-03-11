@@ -6,9 +6,12 @@ import ru.javawebinar.topjava.LoggedUser;
 import ru.javawebinar.topjava.LoggerWrapper;
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.service.UserMealService;
+import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static ru.javawebinar.topjava.util.exception.ExceptionUtil.checkAccess;
 
 /**
  * GKislin
@@ -38,23 +41,25 @@ public class UserMealRestController {
 
     public UserMeal get(int id) {
         LOG.info("get " + id);
-        return service.get(id);
+        UserMeal userMeal=service.get(id);
+        checkAccess(userMeal);
+        return userMeal;
     }
 
     public UserMeal create(UserMeal userMeal) {
         LOG.info("create " + userMeal);
-        //userMeal.setUserId(userId);
+        checkAccess(userMeal);
         return service.save(userMeal);
     }
 
     public void delete(int id) {
-        //todo ?check userId on delete
+        checkAccess(service.get(id));
         LOG.info("delete " + id);
         service.delete(id);
     }
 
     public void update(UserMeal userMeal) {
-        //todo ?check userId on update
+        checkAccess(userMeal);
         LOG.info("update " + userMeal);
         service.update(userMeal);
     }

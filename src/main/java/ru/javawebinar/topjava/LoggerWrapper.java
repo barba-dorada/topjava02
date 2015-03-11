@@ -2,6 +2,7 @@ package ru.javawebinar.topjava;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.javawebinar.topjava.util.exception.AccessViolatioException;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 /**
@@ -74,5 +75,10 @@ public class LoggerWrapper {
     public NotFoundException getNotFoundException(String reason) {
         logger.error("No data found");
         return new NotFoundException(reason);
+    }
+
+    public AccessViolatioException getAccesViovationException(String msg) {
+        logger.error("Access Violation");
+        return new AccessViolatioException(msg);
     }
 }

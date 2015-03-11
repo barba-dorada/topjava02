@@ -1,7 +1,9 @@
 package ru.javawebinar.topjava.util.exception;
 
 
+import ru.javawebinar.topjava.LoggedUser;
 import ru.javawebinar.topjava.LoggerWrapper;
+import ru.javawebinar.topjava.model.UserMeal;
 
 /**
  * User: gkislin
@@ -22,8 +24,13 @@ public class ExceptionUtil {
         return check(object, "id=" + id);
     }
 
+
     public static <T> T check(T object, String msg) {
         if (object == null) throw LOG.getNotFoundException("Not found entity with " + msg);
         return object;
+    }
+
+    public static void checkAccess(UserMeal userMeal){
+        if(userMeal.getUserId()!= LoggedUser.id()) throw LOG.getAccesViovationException(""+LoggedUser.id());
     }
 }

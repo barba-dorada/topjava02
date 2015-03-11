@@ -2,15 +2,16 @@ package ru.javawebinar.topjava.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.javawebinar.topjava.LoggedUser;
 import ru.javawebinar.topjava.LoggerWrapper;
-import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.repository.UserMealRepository;
 import ru.javawebinar.topjava.util.exception.ExceptionUtil;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
+import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * GKislin
@@ -44,16 +45,33 @@ public class UserMealServiceImpl implements UserMealService {
         LOG.info("getByUserId " + userId);
         return ExceptionUtil.check(repository.getByUserId(userId), "userId=" + userId);
     }
-// а это тут нужно?
+
+    @Override
+    public void deleteByUserId(int userId) {
+        LOG.info("deleteByUserId " + userId);
+        List<UserMeal> userMealList = getByUserId(userId);
+        for (UserMeal userMeal:userMealList){
+            delete(userMeal.getId());
+        }
+    }
+
     public List<UserMeal> getAll() {
         LOG.info("getAll");
-        return repository.getAll();
+        return getByUserId(LoggedUser.id());
     }
 
     public void update(UserMeal userMeal) throws NotFoundException {
         LOG.info("update " + userMeal);
         ExceptionUtil.check(repository.save(userMeal), userMeal.getId());
 
+    }
+
+    public List<UserMeal> getAll(LocalDateTime from,LocalDateTime to) {
+        LOG.info("getAllFromTo");
+        List<UserMeal> list = repository.getAll();
+        LinkedList<UserMeal> filteredList=new LinkedList<>();
+        list.stream().filter(um -> (um.getDateTime().isAfter(from) && um.getDateTime().isBefore(to))).forEach(filteredList::add);
+        return filteredList;
     }
 
 
