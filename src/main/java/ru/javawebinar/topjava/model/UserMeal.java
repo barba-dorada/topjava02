@@ -49,7 +49,7 @@ public class UserMeal extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Meal(" + id + ", " + TimeUtil.toString(dateTime) + ", '" + description + "', calories:" + calories + ')';
+        return "Meal(" + id + ", " + TimeUtil.toString(dateTime) + ", '" + description + "', calories:" + calories + ", iserId:" + user.getId()+ ')';
     }
 
     public void setUser(User user) {
