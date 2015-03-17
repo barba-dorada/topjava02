@@ -89,7 +89,7 @@ public class UserMealServiceTest {
         MEAL4.setId(created.getId());
         MealTestData.MATCHER.assertListEquals(Arrays.asList(MEAL1,MEAL2,MEAL3,MEAL4), service.getAll(USER.getId()));
     }
-    @Test(expected = AccessViolationException.class)
+    @Test(expected = NotFoundException.class)
     public void testAccessViolationOnDelete(){
         service.delete(100006,100000);
     }

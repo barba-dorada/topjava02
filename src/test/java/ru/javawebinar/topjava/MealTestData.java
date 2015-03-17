@@ -20,10 +20,10 @@ public class MealTestData {
 //    VALUES ('20150311','meal2',200,100000);
 //    VALUES ('20150312','meal3',350,100000);
 
-    public static UserMeal MEAL1=mkUserMeal(100003,"20150310","meal1",100 , UserTestData.USER);
-    public static UserMeal MEAL2=mkUserMeal(100004,"20150311","meal2",200 , UserTestData.USER);
-    public static UserMeal MEAL3=mkUserMeal(100005,"20150312","meal3",350 , UserTestData.USER);
-    public static UserMeal MEAL4=mkUserMeal(null,"20150312","meal4",123 , UserTestData.USER);
+    public static UserMeal MEAL1= createUserMeal(100003, "20150310", "meal1", 100, UserTestData.USER);
+    public static UserMeal MEAL2= createUserMeal(100004, "20150311", "meal2", 200, UserTestData.USER);
+    public static UserMeal MEAL3= createUserMeal(100005, "20150312", "meal3", 350, UserTestData.USER);
+    public static UserMeal MEAL4= createUserMeal(null, "20150312", "meal4", 123, UserTestData.USER);
 
 
     public static void main(String[] args) {
@@ -38,7 +38,7 @@ public class MealTestData {
                 }
             });
 
-    static UserMeal mkUserMeal(Integer id,String sDateTime,String descr, int callories, User user ){
+    static UserMeal createUserMeal(Integer id, String sDateTime, String descr, int callories, User user){
         LocalDateTime td = str2DT(sDateTime);
         UserMeal userMeal=new UserMeal(id, td,descr,callories);
         userMeal.setUser(user);

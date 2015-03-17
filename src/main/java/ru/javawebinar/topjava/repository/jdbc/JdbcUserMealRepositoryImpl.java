@@ -73,8 +73,6 @@ public class JdbcUserMealRepositoryImpl implements UserMealRepository {
                 .addValue("calories", userMeal.getCalories())
                 .addValue("user_id", userId);
 
-        //TODO а если юзер левый?
-
         if (userMeal.isNew()) {
             Number newKey = insertUserMeal.executeAndReturnKey(map);
             userMeal.setId(newKey.intValue());
@@ -89,15 +87,7 @@ public class JdbcUserMealRepositoryImpl implements UserMealRepository {
     @Override
     public boolean delete(int id, int userId) {
         LOG.info("delete id {} for user {}",id,userId);
-
-        try {
-            //userID check
-            get(id, userId);
-        }catch (org.springframework.dao.EmptyResultDataAccessException e){
-            throw LOG.getNotFoundException("meal with id="+id+"not found!");
-        }
-        return jdbcTemplate.update("DELETE FROM MEALS WHERE id=?", id) != 0;
-
+        return jdbcTemplate.update("DELETE FROM MEALS WHERE id=? AND user_id=?", id,userId) != 0;
     }
 
     @Override
