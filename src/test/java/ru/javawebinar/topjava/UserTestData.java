@@ -20,6 +20,7 @@ public class UserTestData {
 
     public static final TestUser USER = new TestUser(BaseEntity.START_SEQ, "User", "user@yandex.ru", "password", true, Role.ROLE_USER);
     public static final User ADMIN = new TestUser(BaseEntity.START_SEQ + 1, "Admin", "admin@gmail.com", "admin", true, Role.ROLE_ADMIN);
+    public static final TestUser USER2 = new TestUser(BaseEntity.START_SEQ+2, "User2", "user2@yandex.ru", "password2", true, Role.ROLE_USER);
 
     public static class TestUser extends User {
 

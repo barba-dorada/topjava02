@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.javawebinar.topjava.MealTestData;
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.util.DbPopulator;
+import ru.javawebinar.topjava.util.exception.AccessViolationException;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.util.Arrays;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.USER;
+import static ru.javawebinar.topjava.UserTestData.USER2;
 
 
 @ContextConfiguration({
@@ -86,5 +88,14 @@ public class UserMealServiceTest {
         UserMeal created=service.save(MEAL4,USER.getId());
         MEAL4.setId(created.getId());
         MealTestData.MATCHER.assertListEquals(Arrays.asList(MEAL1,MEAL2,MEAL3,MEAL4), service.getAll(USER.getId()));
+    }
+    @Test(expected = AccessViolationException.class)
+    public void testAccessViolationOnDelete(){
+        service.delete(100006,100000);
+    }
+
+    @Test(expected = AccessViolationException.class)
+    public void testAccessViolationOnSave(){
+        service.save(MEAL4, USER2.getId());
     }
 }

@@ -15,7 +15,6 @@ import ru.javawebinar.topjava.util.DbPopulator;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static ru.javawebinar.topjava.UserTestData.*;
@@ -43,7 +42,7 @@ public class UserServiceTest {
         TestUser tu = new TestUser("New", "new@gmail.com", "newPass", Role.ROLE_USER);
         User created = service.save(tu.asUser());
         tu.setId(created.getId());
-        MATCHER.assertListEquals(Arrays.asList(ADMIN, tu, USER), service.getAll());
+        MATCHER.assertListEquals(Arrays.asList(ADMIN, tu, USER,USER2), service.getAll());
     }
 
     @Test(expected = DataAccessException.class)
@@ -54,7 +53,7 @@ public class UserServiceTest {
     @Test
     public void testDelete() throws Exception {
         service.delete(BaseEntity.START_SEQ);
-        MATCHER.assertListEquals(Collections.singletonList(ADMIN), service.getAll());
+        MATCHER.assertListEquals(Arrays.asList(ADMIN,  USER2), service.getAll());
     }
 
     @Test(expected = NotFoundException.class)
@@ -78,7 +77,7 @@ public class UserServiceTest {
     @Test
     public void testGetAll() throws Exception {
         List<User> all = service.getAll();
-        MATCHER.assertListEquals(Arrays.asList(ADMIN, USER), all);
+        MATCHER.assertListEquals(Arrays.asList(ADMIN, USER,USER2), all);
     }
 
     @Test

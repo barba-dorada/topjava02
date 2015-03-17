@@ -7,9 +7,11 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import ru.javawebinar.topjava.LoggerWrapper;
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.repository.UserMealRepository;
 import ru.javawebinar.topjava.repository.UserRepository;
+import ru.javawebinar.topjava.util.exception.AccessViolationException;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -25,7 +27,7 @@ import java.util.List;
 
 @Repository
 public class JdbcUserMealRepositoryImpl implements UserMealRepository {
-
+    private static final LoggerWrapper LOG = LoggerWrapper.get(JdbcUserMealRepositoryImpl.class);
     @Autowired
     UserRepository userRepository;
 
@@ -61,6 +63,9 @@ public class JdbcUserMealRepositoryImpl implements UserMealRepository {
     ///////////////////
     @Override
     public UserMeal save(UserMeal userMeal, int userId) {
+        LOG.info("save {} for user {}",userMeal,userId);
+
+        if(userMeal.getUser().getId()!=userId) throw new AccessViolationException("AssessViolation! bad userId:"+userId+"for "+userMeal);
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("id", userMeal.getId())
                 .addValue("date_time", Timestamp.valueOf(userMeal.getDateTime()))
@@ -83,29 +88,41 @@ public class JdbcUserMealRepositoryImpl implements UserMealRepository {
 
     @Override
     public boolean delete(int id, int userId) {
-        //TODO add userID check
+        LOG.info("delete id {} for user {}",id,userId);
+
+        try {
+            //userID check
+            get(id, userId);
+        }catch (org.springframework.dao.EmptyResultDataAccessException e){
+            throw LOG.getNotFoundException("meal with id="+id+"not found!");
+        }
         return jdbcTemplate.update("DELETE FROM MEALS WHERE id=?", id) != 0;
 
     }
 
     @Override
     public UserMeal get(int id, int userId) {
-        //TODO add userID check
-        return jdbcTemplate.queryForObject("SELECT * FROM meals WHERE id=?", ROW_MAPPER, id);
+        LOG.info("get meal{}",id);
+        UserMeal userMeal = jdbcTemplate.queryForObject("SELECT * FROM meals WHERE id=?", ROW_MAPPER, id);
+        if(userMeal.getUser().getId()!=userId) throw new AccessViolationException("AssessViolation! bad userId:"+userId+"for "+userMeal);
+        return userMeal;
     }
 
     @Override
     public List<UserMeal> getAll(int userId) {
+        LOG.info("getAll for user {}",userId);
         return jdbcTemplate.query("SELECT * FROM meals WHERE user_id=?", ROW_MAPPER, userId);
     }
 
     @Override
     public void deleteAll(int userId) {
+        LOG.info("deleteAll for user {}",userId);
         jdbcTemplate.update("DELETE FROM meals WHERE user_id=?", userId);
     }
 
     @Override
     public List<UserMeal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
+        LOG.info("getBetween for user {}",userId);
         return jdbcTemplate.query("SELECT * FROM meals WHERE user_id=? AND( date_time>=?) AND (date_time<=?)", ROW_MAPPER, userId,
                 Timestamp.valueOf(startDate), Timestamp.valueOf(endDate));
     }
