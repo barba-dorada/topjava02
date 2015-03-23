@@ -2,7 +2,6 @@ package ru.javawebinar.topjava.repository.jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -31,7 +30,7 @@ public class JdbcUserMealRepositoryImpl implements UserMealRepository {
     @Autowired
     UserRepository userRepository;
 
-    private final RowMapper<UserMeal> ROW_MAPPER = new RowMapper<UserMeal>() {
+/*    private final RowMapper<UserMeal> ROW_MAPPER = new RowMapper<UserMeal>() {
         @Override
         public UserMeal mapRow(ResultSet rs, int rowNum) throws SQLException {
             UserMeal userMeal=new UserMeal(
@@ -42,7 +41,19 @@ public class JdbcUserMealRepositoryImpl implements UserMealRepository {
             userMeal.setUser(userRepository.get(rs.getInt("user_id")));
             return userMeal;
         }
-    };
+    };*/
+
+
+    private UserMeal mapUserMeal(ResultSet rs, int rowNum) throws SQLException {
+        UserMeal userMeal = new UserMeal(
+                rs.getInt("id"),
+                rs.getTimestamp("date_time").toLocalDateTime(),
+                rs.getString("description"),
+                rs.getInt("calories"));
+        userMeal.setUser(userRepository.get(rs.getInt("user_id")));
+        return userMeal;
+    }
+
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -63,9 +74,10 @@ public class JdbcUserMealRepositoryImpl implements UserMealRepository {
     ///////////////////
     @Override
     public UserMeal save(UserMeal userMeal, int userId) {
-        LOG.info("save {} for user {}",userMeal,userId);
+        LOG.info("save {} for user {}", userMeal, userId);
 
-        if(userMeal.getUser().getId()!=userId) throw new AccessViolationException("AssessViolation! bad userId:"+userId+"for "+userMeal);
+        if (userMeal.getUser().getId() != userId)
+            throw new AccessViolationException("AssessViolation! bad userId:" + userId + "for " + userMeal);
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("id", userMeal.getId())
                 .addValue("date_time", Timestamp.valueOf(userMeal.getDateTime()))
@@ -86,36 +98,38 @@ public class JdbcUserMealRepositoryImpl implements UserMealRepository {
 
     @Override
     public boolean delete(int id, int userId) {
-        LOG.info("delete id {} for user {}",id,userId);
-        return jdbcTemplate.update("DELETE FROM MEALS WHERE id=? AND user_id=?", id,userId) != 0;
+        LOG.info("delete id {} for user {}", id, userId);
+        return jdbcTemplate.update("DELETE FROM MEALS WHERE id=? AND user_id=?", id, userId) != 0;
     }
 
     @Override
     public UserMeal get(int id, int userId) {
-        LOG.info("get meal{}",id);
-        UserMeal userMeal = jdbcTemplate.queryForObject("SELECT * FROM meals WHERE id=?", ROW_MAPPER, id);
-        if(userMeal.getUser().getId()!=userId) throw new AccessViolationException("AssessViolation! bad userId:"+userId+"for "+userMeal);
+        LOG.info("get meal{}", id);
+        UserMeal userMeal = jdbcTemplate.queryForObject("SELECT * FROM meals WHERE id=?", this::mapUserMeal, id);
+        if (userMeal.getUser().getId() != userId)
+            throw new AccessViolationException("AssessViolation! bad userId:" + userId + "for " + userMeal);
         return userMeal;
     }
 
     @Override
     public List<UserMeal> getAll(int userId) {
-        LOG.info("getAll for user {}",userId);
-        return jdbcTemplate.query("SELECT * FROM meals WHERE user_id=?", ROW_MAPPER, userId);
+        LOG.info("getAll for user {}", userId);
+        return jdbcTemplate.query("SELECT * FROM meals WHERE user_id=? ORDER BY date_time", this::mapUserMeal, userId);
     }
 
     @Override
     public void deleteAll(int userId) {
-        LOG.info("deleteAll for user {}",userId);
+        LOG.info("deleteAll for user {}", userId);
         jdbcTemplate.update("DELETE FROM meals WHERE user_id=?", userId);
     }
 
     @Override
     public List<UserMeal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
-        LOG.info("getBetween for user {}",userId);
-        return jdbcTemplate.query("SELECT * FROM meals WHERE user_id=? AND( date_time>=?) AND (date_time<=?)", ROW_MAPPER, userId,
+        LOG.info("getBetween for user {}", userId);
+        return jdbcTemplate.query("SELECT * FROM meals WHERE user_id=? AND( date_time>=?) AND (date_time<=?) ORDER BY date_time", this::mapUserMeal, userId,
                 Timestamp.valueOf(startDate), Timestamp.valueOf(endDate));
     }
+
 ///////////////////////
 
 
