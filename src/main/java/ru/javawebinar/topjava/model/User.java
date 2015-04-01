@@ -1,6 +1,10 @@
 package ru.javawebinar.topjava.model;
 
-import java.util.Collection;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.persistence.*;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.Set;
@@ -9,28 +13,58 @@ import java.util.Set;
  * User: gkislin
  * Date: 22.08.2014
  */
+@Entity
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "unique_email")})
+@NamedQueries({
+        @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=:id"),
+        @NamedQuery(name = User.BY_EMAIL, query = "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.email=?1"),
+        @NamedQuery(name = User.ALL_SORTED, query = "SELECT u FROM User u LEFT JOIN FETCH u.roles ORDER BY u.name, u.email"),
+})
 public class User extends NamedEntity {
 
-    private String email;
+    public static final String DELETE = "User.delete";
+    public static final String ALL_SORTED = "User.getAllSorted";
+    public static final String BY_EMAIL = "User.getByEmail";
 
-    //  Length(min = 5)
-    private String password;
+    @Column(name = "email",nullable = false,unique = true)
+    @Email
+    @NotEmpty
+    protected String email;
 
-    private boolean enabled = true;
+    @Column(name = "password",nullable = false)
+    @NotEmpty
+    @Length(min=5)
+    protected String password;
 
-    private Date registered;
+    @Column(nullable = false)
+    protected boolean enabled = true;
 
-    private Set<Role> authorities;
+    @Column(columnDefinition = "timestamp default now()")
+    protected Date registered;
+
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "user_roles",joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role")
+    @ElementCollection(fetch =FetchType.EAGER)
+    protected Set<Role> roles;
 
     public User() {
     }
 
-    public User(String name, String email, String password, Role role, Role... roles) {
-        super(name);
+    public User(User u) {
+        this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.isEnabled(), u.getRoles());
+    }
+
+    public User(Integer id, String name, String email, String password, boolean enabled, Role role, Role... roles) {
+        this(id, name, email, password, enabled, EnumSet.of(role, roles));
+    }
+
+    public User(Integer id, String name, String email, String password, boolean enabled, Set<Role> roles) {
+        super(id, name);
         this.email = email;
         this.password = password;
-        this.enabled = true;
-        this.authorities = EnumSet.of(role, roles);
+        this.enabled = enabled;
+        this.roles = roles;
     }
 
     public String getEmail() {
@@ -57,20 +91,12 @@ public class User extends NamedEntity {
         this.enabled = enabled;
     }
 
-    public void addAuthority(Role authority) {
-        if (authorities == null) {
-            authorities = EnumSet.of(authority);
-        } else {
-            authorities.add(authority);
-        }
-    }
-
     public boolean isEnabled() {
         return enabled;
     }
 
-    public Collection<Role> getAuthorities() {
-        return authorities;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
     public String getPassword() {
@@ -79,12 +105,12 @@ public class User extends NamedEntity {
 
     @Override
     public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
+        return "User (" +
+                "id=" + id +
+                ", email=" + email +
+                ", name=" + name +
                 ", enabled=" + enabled +
-                ", registered=" + registered +
-                "}";
+                ", roles=" + roles +
+                ')';
     }
 }

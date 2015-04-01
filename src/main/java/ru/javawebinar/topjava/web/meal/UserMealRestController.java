@@ -21,45 +21,45 @@ public class UserMealRestController {
     @Autowired
     private UserMealService service;
 
-    public UserMeal getNew(){
-        LOG.info("getNew");
-        return service.getNew(LoggedUser.id());
-    }
-    
-    public List<UserMeal> getAll() {
-        LOG.info("getAll");
-        return service.getAll(LoggedUser.id());
-    }
-
-    public List<UserMeal> getAllFromTo(LocalDateTime from,LocalDateTime to) {
-        LOG.info("getAllFromTo");
-        return service.getAll(from,to,LoggedUser.id());
-    }
-
     public UserMeal get(int id) {
-        LOG.info("get " + id);
-        UserMeal userMeal=service.get(id,LoggedUser.id());
-        return userMeal;
-    }
-
-    public UserMeal create(UserMeal userMeal) {
-        LOG.info("create " + userMeal);
-        return service.save(userMeal,LoggedUser.id());
+        int userId = LoggedUser.id();
+        LOG.info("get meal {} for User {}", id, userId);
+        return service.get(id, userId);
     }
 
     public void delete(int id) {
-        LOG.info("delete " + id);
-        service.delete(id,LoggedUser.id());
+        int userId = LoggedUser.id();
+        LOG.info("delete meal {} for User {}", id, userId);
+        service.delete(id, userId);
     }
 
-    public void deleteAll(){
-        LOG.info("deleteAll");
-        service.deleteAll(LoggedUser.id());
+    public List<UserMeal> getAll() {
+        int userId = LoggedUser.id();
+        LOG.info("getAll for User {}", userId);
+        return service.getAll(userId);
     }
 
-    public void update(UserMeal userMeal) {
-        LOG.info("update " + userMeal);
-        service.update(userMeal,LoggedUser.id());
+    public void deleteAll() {
+        int userId = LoggedUser.id();
+        LOG.info("deleteAll for User {}", userId);
+        service.deleteAll(userId);
     }
 
+    public void update(UserMeal meal) {
+        int userId = LoggedUser.id();
+        LOG.info("update {} for User {}", meal, userId);
+        service.update(meal, userId);
+    }
+
+    public UserMeal create(UserMeal meal) {
+        int userId = LoggedUser.id();
+        LOG.info("create {} for User {}", meal, userId);
+        return service.save(meal, userId);
+    }
+
+    public List<UserMeal> getBetween(LocalDateTime startDate, LocalDateTime endDate) {
+        int userId = LoggedUser.id();
+        LOG.info("getBetween {} and {} for User {}", startDate, endDate, userId);
+        return service.getBetween(startDate, endDate, userId);
+    }
 }

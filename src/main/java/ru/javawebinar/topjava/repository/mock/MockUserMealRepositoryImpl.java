@@ -19,7 +19,7 @@ public class MockUserMealRepositoryImpl implements UserMealRepository {
 
     @Override
     public UserMeal save(UserMeal userMeal,int userId) {
-        if(userMeal.getUserId()!=userId) throw LOG.getAccesViovationException("bad userId on save! userId:"+userId+"meal:"+userMeal);
+        if(userMeal.getUser().getId()!=userId) throw LOG.getAccesViovationException("bad userId on save! userId:"+userId+"meal:"+userMeal);
         LOG.info("save " + userMeal);
         return userMeal;
     }
@@ -45,11 +45,15 @@ public class MockUserMealRepositoryImpl implements UserMealRepository {
         return Collections.emptyList();
     }
 
-    // тут доступ на уровне запроса, проверяет база.
     @Override
-    public List<UserMeal> getFromTo(LocalDateTime from, LocalDateTime to, int userId) {
-        LOG.info("getFromTo");
-        return Collections.emptyList();
+    public void deleteAll(int userId) {
+
     }
+
+    @Override
+    public List<UserMeal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
+        return null;
+    }
+
 
 }

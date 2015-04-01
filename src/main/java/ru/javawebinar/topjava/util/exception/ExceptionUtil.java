@@ -31,6 +31,6 @@ public class ExceptionUtil {
     }
 
     public static void checkAccess(UserMeal userMeal){
-        if(userMeal.getUserId()!= LoggedUser.id()) throw LOG.getAccesViovationException(""+LoggedUser.id());
+        if(userMeal.getUser().getId()!= LoggedUser.id()) throw LOG.getAccesViovationException(""+LoggedUser.id());
     }
 }
