@@ -53,6 +53,13 @@
         <jpa:repositories base-package="ru.javawebinar.**.repository.jpa"/>
     </beans>
 
+
+    <beans profile="jpadata">
+        <context:component-scan  base-package="ru.javawebinar.**.repository.jpadata"/>
+        <jpa:repositories base-package="ru.javawebinar.**.repository.jpadata"/>
+    </beans>
+
+
     <beans profile="postgres">
         <!--<context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>-->
 
@@ -86,8 +93,13 @@
             <constructor-arg ref="dataSource"/>
         </bean>
     </beans>
-    <beans profile="jpa">
-    </beans>
+
+
+
+
+
+
+
     <beans profile="jpa,jpadata">
         <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
               p:dataSource-ref="dataSource"
@@ -115,7 +127,6 @@
         <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
               p:entityManagerFactory-ref="entityManagerFactory"/>
     </beans>
-    <beans profile="jpadata">
-    </beans>
+
 
 </beans>

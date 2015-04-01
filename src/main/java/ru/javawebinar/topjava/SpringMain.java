@@ -20,11 +20,10 @@ public class SpringMain {
 */
 
         try (GenericXmlApplicationContext ctx = new GenericXmlApplicationContext()) {
-            ctx.getEnvironment().setActiveProfiles("postgres", "jpa");
+            ctx.getEnvironment().setActiveProfiles("postgres", "jpadata");
             ctx.load("spring/spring-app.xml", "spring/spring-db.xml");
             ctx.refresh();
-            String sss=String.join("\n", ctx.getBeanDefinitionNames());
-            System.out.println("\n" + sss + "\n");
+            print(ctx);
             UserMealRestController adminController = ctx.getBean(UserMealRestController.class);
             UserService us=ctx.getBean(UserService.class);
 
@@ -34,5 +33,10 @@ public class SpringMain {
             System.out.println(userMealService.getAll(100000));
         }
 
+    }
+
+    private static void print(GenericXmlApplicationContext ctx) {
+        String sss=String.join("\n", ctx.getBeanDefinitionNames());
+        System.out.println("\n==============\n" + sss + "\n=================\n");
     }
 }
