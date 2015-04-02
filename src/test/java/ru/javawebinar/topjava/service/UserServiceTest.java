@@ -1,6 +1,5 @@
 package ru.javawebinar.topjava.service;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -8,7 +7,6 @@ import ru.javawebinar.topjava.UserTestData.*;
 import ru.javawebinar.topjava.model.BaseEntity;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
-import ru.javawebinar.topjava.util.DbPopulator;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.util.Arrays;
@@ -16,25 +14,18 @@ import java.util.List;
 
 import static ru.javawebinar.topjava.UserTestData.*;
 
-public abstract class UserServiceTest {
+
+public abstract class UserServiceTest extends ServiceTest {
 
     @Autowired
     protected UserService service;
-
-    @Autowired
-    private DbPopulator dbPopulator;
-
-    @Before
-    public void setUp() throws Exception {
-        dbPopulator.execute();
-    }
 
     @Test
     public void testSave() throws Exception {
         TestUser tu = new TestUser("New", "new@gmail.com", "newPass", Role.ROLE_USER);
         User created = service.save(tu.asUser());
         tu.setId(created.getId());
-        MATCHER.assertListEquals(Arrays.asList(ADMIN, tu, USER,USER2), service.getAll());
+        MATCHER.assertListEquals(Arrays.asList(ADMIN, tu, USER, USER2), service.getAll());
     }
 
     @Test(expected = DataAccessException.class)
@@ -45,7 +36,7 @@ public abstract class UserServiceTest {
     @Test
     public void testDelete() throws Exception {
         service.delete(BaseEntity.START_SEQ);
-        MATCHER.assertListEquals(Arrays.asList(ADMIN,  USER2), service.getAll());
+        MATCHER.assertListEquals(Arrays.asList(ADMIN, USER2), service.getAll());
     }
 
     @Test(expected = NotFoundException.class)
@@ -69,7 +60,7 @@ public abstract class UserServiceTest {
     @Test
     public void testGetAll() throws Exception {
         List<User> all = service.getAll();
-        MATCHER.assertListEquals(Arrays.asList(ADMIN, USER,USER2), all);
+        MATCHER.assertListEquals(Arrays.asList(ADMIN, USER, USER2), all);
     }
 
     @Test

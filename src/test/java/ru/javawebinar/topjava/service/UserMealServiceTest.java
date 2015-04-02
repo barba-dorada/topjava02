@@ -1,11 +1,9 @@
 package ru.javawebinar.topjava.service;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.javawebinar.topjava.MealTestData;
 import ru.javawebinar.topjava.model.UserMeal;
-import ru.javawebinar.topjava.util.DbPopulator;
 import ru.javawebinar.topjava.util.exception.AccessViolationException;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
@@ -16,18 +14,10 @@ import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.USER;
 import static ru.javawebinar.topjava.UserTestData.USER2;
 
-public abstract class UserMealServiceTest {
+public abstract class UserMealServiceTest extends ServiceTest {
 
     @Autowired
     protected UserMealService service;
-
-    @Autowired
-    private DbPopulator dbPopulator;
-
-    @Before
-    public void setUp() throws Exception {
-        dbPopulator.execute();
-    }
 
     @Test
     public void testGet() throws Exception {
@@ -39,7 +29,7 @@ public abstract class UserMealServiceTest {
     public void testDelete() throws Exception {
         service.delete(MEAL1.getId(), USER.getId());
         List<UserMeal> all = service.getAll(USER.getId());
-        MealTestData.MATCHER.assertListEquals(Arrays.asList( MEAL3,MEAL2), all);
+        MealTestData.MATCHER.assertListEquals(Arrays.asList(MEAL3, MEAL2), all);
 
     }
 
