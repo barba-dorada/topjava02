@@ -2,7 +2,7 @@ package ru.javawebinar.topjava;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.javawebinar.topjava.util.exception.AccessViolatioException;
+import ru.javawebinar.topjava.util.exception.AccessViolationException;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 /**
@@ -77,8 +77,8 @@ public class LoggerWrapper {
         return new NotFoundException(reason);
     }
 
-    public AccessViolatioException getAccesViovationException(String msg) {
+    public AccessViolationException getAccesViovationException(String msg) {
         logger.error("Access Violation! "+msg);
-        return new AccessViolatioException(msg);
+        return new AccessViolationException(msg);
     }
 }

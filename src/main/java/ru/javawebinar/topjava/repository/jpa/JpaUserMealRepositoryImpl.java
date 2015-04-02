@@ -45,7 +45,10 @@ public class JpaUserMealRepositoryImpl implements UserMealRepository {
 
     @Override
     public UserMeal get(int id, int userId) {
-        return em.find(UserMeal.class, id);
+        UserMeal userMeal=em.find(UserMeal.class, id);
+        if (userMeal.getUser().getId() != userId)
+            throw new AccessViolationException("AssessViolation! bad userId:" + userId + "for " + userMeal);
+        return userMeal;
     }
 
     @Override

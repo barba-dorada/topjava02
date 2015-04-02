@@ -80,4 +80,18 @@ public abstract class UserMealServiceTest extends ServiceTest {
     public void testAccessViolationOnSave() {
         service.save(MEAL4, USER2.getId());
     }
+
+    @Test(expected = AccessViolationException.class)
+    public void testGetNotFound(){
+        service.get(MEAL1.getId(), USER2.getId());
+    }
+    @Test(expected =         AccessViolationException.class)
+    public void testNotFoundUpdate(){
+        MEAL4.setDescription("upd descr");
+        service.update(MEAL4,USER2.getId());
+    }
+    @Test(expected = NotFoundException.class)
+    public void testDeleteNotFound(){
+        service.delete(MEAL1.getId(),USER2.getId());
+    }
 }
