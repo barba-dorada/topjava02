@@ -1,9 +1,13 @@
 package ru.javawebinar.topjava;
 
 import org.springframework.context.support.GenericXmlApplicationContext;
-import ru.javawebinar.topjava.service.UserMealService;
-import ru.javawebinar.topjava.service.UserService;
-import ru.javawebinar.topjava.web.meal.UserMealRestController;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceUtil;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * User: gkislin
@@ -23,20 +27,35 @@ public class SpringMain {
             ctx.getEnvironment().setActiveProfiles("postgres", "jpadata");
             ctx.load("spring/spring-app.xml", "spring/spring-db.xml");
             ctx.refresh();
+
+            EntityManagerFactory entityManagerFactory = ctx.getBean(EntityManagerFactory.class);
+            EntityManager em = entityManagerFactory.createEntityManager();
+
             print(ctx);
-            UserMealRestController adminController = ctx.getBean(UserMealRestController.class);
+
+            PersistenceUtil persistenceUtil = Persistence.getPersistenceUtil();
+            System.out.println(persistenceUtil);
+
+
+            Map<String, String> prop = new HashMap<String, String>();
+            prop.put("javax.persistence.schema-generation.scripts.create-target", "c:/dev/sampleCreate.ddl");
+            prop.put("javax.persistence.schema-generation.scripts.drop-target", "c:/dev/sampleDrop.ddl");
+            Persistence.generateSchema("default", null);
+            //PersistenceUtil pu = Persistence.getPersistenceUtil();
+
+           /* UserMealRestController adminController = ctx.getBean(UserMealRestController.class);
             UserService us=ctx.getBean(UserService.class);
 
             System.out.println(us.getAll());
 
             UserMealService userMealService=ctx.getBean(UserMealService.class);
-            System.out.println(userMealService.getAll(100000));
+            System.out.println(userMealService.getAll(100000));*/
         }
 
     }
 
     private static void print(GenericXmlApplicationContext ctx) {
-        String sss=String.join("\n", ctx.getBeanDefinitionNames());
+        String sss = String.join("\n", ctx.getBeanDefinitionNames());
         System.out.println("\n==============\n" + sss + "\n=================\n");
     }
 }
